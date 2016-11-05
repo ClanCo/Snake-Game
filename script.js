@@ -5,7 +5,7 @@ var snakeGame;
 /********************* function event ************************/
 window.onload = function()
 {
-    snakeGame(900,600,20,75);
+    snakeGame= new snakeGame(900,600,20,75);
     snake = new Snake([[6,4],[5,4],[4,4],[3,4]],"right");
     apple = new Apple([10,10]);
     snakeGame.init(snake,apple);
@@ -149,11 +149,11 @@ function snakeGame(canvasWidth, canvasHeight, blockSize, delay)
     this.drawScore = function()
     {
         this.ctx.save();
-        this.ctx.fillText(score.toString(),5,this.canvas.height - 5);
+        this.ctx.fillText(this.score.toString(),5,this.canvas.height - 5);
         this.ctx.restore();
     };
 
-    
+    return this;
 }
     
 /****************** Snake Constructor ***********************/
@@ -227,6 +227,15 @@ function Snake(body,direction)
                 {
                     this.direction = newDirection;
                 }
+        };
+            
+        this.isEatingApple = function(appleToEat)
+        {
+            var head = this.body[0];
+            if(head[0] === appleToEat.position[0] && head[1] === appleToEat.position[1])
+                return true;
+            else 
+                return false;
         };
     }
     
